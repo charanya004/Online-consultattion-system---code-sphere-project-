@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Online Consultation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ADD8E6; /* Light Blue - white kadu */
+            text-align: center; /* Text alignment center */
+            min-height: 100vh;
+        }
+
+       .top-bar {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+       .top-bar h2 {
+            color: #333;
+        }
+
+       .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+       .logout-btn {
+            padding: 8px 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+       .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            padding: 20px;
+        }
+
+       .main-card {
+            background: white;
+            padding: 50px 60px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 550px;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            color: #333;
+            font-size: 32px;
+        }
+
+       .menu-btn {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid #4A90E2;
+            border-radius: 10px;
+            background: white;
+            color: #4A90E2;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+       .menu-btn:hover {
+            background: #4A90E2;
+            color: white;
+            transform: translateX(5px);
+        }
+
+       .page {
+            display: none;
+        }
+
+       .page.active {
+            display: block;
+        }
+
+       .back-btn {
+            margin-top: 30px;
+            background: #6c757d;
+            color: white;
+            border: none;
+        }
+
+        /* Form Styling */
+        form {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #333;
+            text-align: left;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        form button[type="submit"] {
+            background: #28a745;
+            color: white;
+            border: none;
+            margin-top: 20px;
+        }
+
+       .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+       .doctor-card, .prescription-item {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: left;
+            border-left: 4px solid #4A90E2;
+        }
+
+       .prescription-item {
+            border-left: 4px solid #ffc107;
+            background: #fff3cd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <h2>🏥 Online Consultation System</h2>
+        <div class="user-section">
+            <span>Welcome, <strong id="userName">User</strong></span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Main Menu Page -->
+        <div id="mainMenu" class="page active">
+            <div class="main-card">
+                <h1>Online Consultation System</h1>
+                <button class="menu-btn" onclick="showPage('booking')">📅 Book Appointment</button>
+                <button class="menu-btn" onclick="showPage('doctors')">👨‍⚕️ Doctors</button>
+                <button class="menu-btn" onclick="showPage('contact')">📞 Contact</button>
+                <button class="menu-btn" onclick="showPage('prescription')">💊 Prescription</button>
+            </div>
+        </div>
+
+        <!-- Booking Page -->
+        <div id="booking" class="page">
+            <div class="main-card">
+                <h1>Book Appointment</h1>
+                <form onsubmit="submitBooking(event)">
+                    <label>Patient Name:</label>
+                    <input type="text" placeholder="Enter your name" required>
+                    
+                    <label>Select Doctor:</label>
+                    <select required>
+                        <option value="">Choose Doctor</option>
+                        <option>Dr. Ramesh - Cardiologist</option>
+                        <option>Dr. Priya - Dermatologist</option>
+                    </select>
+                    
+                    <label>Date:</label>
+                    <input type="date" required>
+                    
+                    <label>Time:</label>
+                    <input type="time" required>
+                    
+                    <button type="submit">Confirm Booking</button>
+                </form>
+                <button class="menu-btn back-btn" onclick="showPage('mainMenu')">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Doctors Page -->
+        <div id="doctors" class="page">
+            <div class="main-card">
+                <h1>Our Doctors</h1>
+                <div class="doctor-card">
+                    <h3>Dr. Ramesh Kumar</h3>
+                    <p><strong>Specialization:</strong> Cardiologist</p>
+                    <p><strong>Experience:</strong> 12 Years</p>
+                    <p><strong>Fee:</strong> ₹500</p>
+                </div>
+                <div class="doctor-card">
+                    <h3>Dr. Priya Sharma</h3>
+                    <p><strong>Specialization:</strong> Dermatologist</p>
+                    <p><strong>Experience:</strong> 8 Years</p>
+                    <p><strong>Fee:</strong> ₹400</p>
+                </div>
+                <button class="menu-btn back-btn" onclick="showPage('mainMenu')">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="main-card">
+                <h1>Contact Us</h1>
+                <div class="info-box">
+                    <p><strong>📧 Email:</strong> support@mediconnect.com</p>
+                    <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+                    <p><strong>📍 Address:</strong> Rajahmundry, AP</p>
+                    <p><strong>⏰ Hours:</strong> 24/7 Available</p>
+                </div>
+                <form>
+                    <label>Your Message:</label>
+                    <textarea rows="4" placeholder="Type your query here..."></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                <button class="menu-btn back-btn" onclick="showPage('mainMenu')">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Prescription Page - KOTHA GA ADD CHESA -->
+        <div id="prescription" class="page">
+            <div class="main-card">
+                <h1>My Prescriptions</h1>
+                <div class="prescription-item">
+                    <h3>Prescription #001</h3>
+                    <p><strong>Date:</strong> 20-06-2026</p>
+                    <p><strong>Doctor:</strong> Dr. Ramesh Kumar</p>
+                    <p><strong>Diagnosis:</strong> Common Cold</p>
+                    <p><strong>Medicines:</strong> Paracetamol 500mg, Cetirizine 10mg</p>
+                    <p><strong>Dosage:</strong> Twice daily after food for 3 days</p>
+                </div>
+                <div class="prescription-item">
+                    <h3>Prescription #002</h3>
+                    <p><strong>Date:</strong> 15-06-2026</p>
+                    <p><strong>Doctor:</strong> Dr. Priya Sharma</p>
+                    <p><strong>Diagnosis:</strong> Skin Allergy</p>
+                    <p><strong>Medicines:</strong> Hydrocortisone Cream, Allegra 120mg</p>
+                    <p><strong>Dosage:</strong> Apply cream twice daily</p>
+                </div>
+                <button class="menu-btn back-btn" onclick="showPage('mainMenu')">← Back to Dashboard</button>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+// Login check
+window.onload = function() {
+    const userName = localStorage.getItem('userName');
+    if (!userName) {
+        window.location.href = 'login.html';
+    } else {
+        document.getElementById('userName').textContent = userName;
+    }
+};
+
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+}
+
+function logout() {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+    window.location.href = 'login.html';
+}
+
+function submitBooking(event) {
+    event.preventDefault();
+    alert('Appointment Booked Successfully! ✅');
+    showPage('mainMenu');
+}
+</script>
+
+</body>
+</html>
