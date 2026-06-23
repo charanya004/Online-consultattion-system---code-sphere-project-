@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Appointment</title>
+</head>
+<body>
+
+<h1>Book Appointment</h1>
+
+<form>
+
+<label>Patient Name</label><br>
+<input type="text" required><br><br>
+
+<label>Doctor Name</label><br>
+<input type="text" required><br><br>
+
+<label>Date</label><br>
+<input type="date" required><br><br>
+
+<label>Time</label><br>
+<input type="time" required><br><br>
+
+<button type="submit" onclick="booked()">
+Confirm Appointment
+</button>
+
+</form>
+
+<br>
+
+<a href="index.html">Back to Home</a>
+<script>
+    function booked(){
+        alert("Appointment Booked Successfully !!!");
+    }
+</script>
+
+</body>
+</html>
